@@ -10,7 +10,7 @@ function normalizeUrl(input) {
   }
 }
 
-// Very lightweight extractive "summary": first few sentences up to maxChars
+// summary extraction up to maxChars
 function compressToSentences(text, maxChars = 600) {
   if (!text) return '';
   const clean = String(text).replace(/\s+/g, ' ').trim();

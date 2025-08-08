@@ -1,4 +1,3 @@
-// server/controllers/bookmarkController.js
 const Bookmark = require('../models/Bookmark');
 const { summarizeUrl, fetchTitleAndFavicon, normalizeUrl } = require('../utils/summarize');
 
@@ -10,14 +9,14 @@ const createBookmark = async (req, res) => {
 
     const normalized = normalizeUrl(url);
 
-    // Compute next position (append at end)
+    // next position (append at end)
     const count = await Bookmark.countDocuments({ user: userId });
 
-    // Fetch minimal metadata
+    // minimal metadata fetch
     const meta = await fetchTitleAndFavicon(normalized);
     const finalTitle = title?.trim() || meta.title || normalized;
 
-    // Get readable page content and compress to a short summary (best-effort)
+    // Get readable page content and compress to a short summary
     const summary = await summarizeUrl(normalized);
 
     const doc = await Bookmark.create({
@@ -28,7 +27,7 @@ const createBookmark = async (req, res) => {
       tags,
       position: count,
       favicon: meta.favicon || '',
-      summary, // <-- persisted
+      summary,
     });
 
     res.status(201).json(doc);
