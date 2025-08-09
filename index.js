@@ -9,7 +9,14 @@ const authRoutes = require('./routes/auth');
 const bookmarkRoutes = require('./routes/bookmarks');
 
 const app = express();
-app.use(cors());
+
+
+const allowedOrigins = [
+  'http://localhost:5173',                         
+  'https://link-saver-frontend-hfcx.vercel.app',   
+];
+app.use(cors({ origin: allowedOrigins }));
+
 app.use(express.json({ limit: '1mb' }));
 
 if (!process.env.MONGO_URI) {
