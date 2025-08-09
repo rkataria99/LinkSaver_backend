@@ -10,7 +10,6 @@ const bookmarkRoutes = require('./routes/bookmarks');
 
 const app = express();
 
-// ---- CORS ----
 const whitelist = new Set([
   'http://localhost:5173',
   'https://link-saver-frontend-hfcx.vercel.app',
@@ -18,7 +17,7 @@ const whitelist = new Set([
 
 const corsOptions = {
   origin(origin, cb) {
-    // allow same-origin / curl / server-to-server (no Origin header)
+    // allow same-origin / curl / server-to-server
     if (!origin) return cb(null, true);
 
     // allow any vercel.app preview deployments
@@ -35,9 +34,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-// respond quickly to preflights
+// for preflights
 app.options('*', cors(corsOptions));
-// ----------------
 
 app.use(express.json({ limit: '1mb' }));
 
@@ -46,7 +44,7 @@ if (!process.env.MONGO_URI) {
   process.exit(1);
 }
 if (!process.env.JWT_SECRET) {
-  console.warn('Warning: missing JWT_SECRET in .env (using insecure default for dev)'); // set in Render!
+  console.warn('Warning: missing JWT_SECRET in .env (using insecure default for dev)'); 
 }
 
 mongoose
